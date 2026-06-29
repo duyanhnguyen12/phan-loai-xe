@@ -1,0 +1,20 @@
+# Dataset (ảnh nặng, không cần đẩy lên)
+data/
+
+# Model đã train
+*.h5
+*.pkl
+*.pth
+
+# Python cache
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Môi trường ảo
+venv/
+env/
+
+# File hệ thống
+.DS_Store
+Thumbs.db
