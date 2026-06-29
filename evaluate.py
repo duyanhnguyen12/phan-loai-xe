@@ -10,7 +10,7 @@ print("Dang load model...")
 model = tf.keras.models.load_model("models/best_model.keras")
 CLASS_NAMES = ['Bus', 'Car', 'Truck']
 
-TEST_DIR = r"D:\Code\archive\test"
+TEST_DIR = os.path.join("data", "test")
 
 results = {'Bus': 0, 'Car': 0, 'Truck': 0}
 files = [f for f in os.listdir(TEST_DIR) if f.endswith(('.jpg', '.jpeg', '.png'))]
