@@ -11,7 +11,16 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 print("Dang load model...")
 model = tf.keras.models.load_model("models/best_model.keras")
 
-CLASS_NAMES = ['Bus', 'Car', 'Truck']
+# Tạo một dataset ảo ngắn hạn để lấy chính xác mảng nhãn Alphabet của hệ điều hành
+temp_ds = tf.keras.utils.image_dataset_from_directory(
+    "data/train",
+    image_size=(224, 224),
+    batch_size=1,
+    shuffle=False,
+    verbose=False # Tắt log in để đỡ rác terminal
+)
+CLASS_NAMES = temp_ds.class_names
+print(f"[ĐỒNG BỘ] Thứ tự nhãn chuẩn từ hệ thống: {CLASS_NAMES}")
 
 def du_doan(duong_dan_anh):
     img = Image.open(duong_dan_anh).convert("RGB").resize((224, 224))
