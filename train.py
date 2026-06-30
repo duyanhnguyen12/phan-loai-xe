@@ -1,5 +1,6 @@
 import tensorflow as tf
 import matplotlib.pyplot as plt
+from keras.regularizers import l2
 
 # 1. Load data - Bật shuffle=True cho cả hai tập để đồng bộ nhãn hoàn hảo
 train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -44,8 +45,8 @@ base_model = tf.keras.applications.MobileNetV2(
 # Bật trainable để tinh chỉnh trọng số cho phù hợp cấu trúc xe thực tế
 base_model.trainable = True
 
-# Khóa các tầng trích xuất cạnh cơ bản, chỉ mở 40 tầng cao cấp phía sau để học hình khối xe
-for layer in base_model.layers[:-40]:
+# Khóa các tầng trích xuất cạnh cơ bản, chỉ mở 20 tầng cao cấp phía sau để học hình khối xe
+for layer in base_model.layers[:-35]:
     layer.trainable = False
 
 inputs = tf.keras.Input(shape=(224, 224, 3))
@@ -53,8 +54,8 @@ x = data_augmentation(inputs)
 x = tf.keras.applications.mobilenet_v2.preprocess_input(x)
 x = base_model(x, training=True) # training=True giúp cập nhật các tầng BatchNormalization
 x = tf.keras.layers.GlobalAveragePooling2D()(x)
-x = tf.keras.layers.Dropout(0.4)(x) # Tăng dropout lên một chút chống overfitting
-outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
+x = tf.keras.layers.Dropout(0.5)(x) # Tăng dropout lên một chút chống overfitting
+outputs = tf.keras.layers.Dense(3, activation='softmax', kernel_regularizer=l2(0.001))(x)
 
 model = tf.keras.Model(inputs, outputs)
 
@@ -69,8 +70,8 @@ model.summary()
 
 # Callbacks
 early_stopping = tf.keras.callbacks.EarlyStopping(
-    monitor='val_loss', # Theo dõi val_loss chính xác hơn val_accuracy
-    patience=5,
+    monitor='val_loss',  # Đổi từ val_accuracy sang val_loss
+    patience=5,          # Giảm patience xuống 3 hoặc 4 để ngắt ngay khi loss có dấu hiệu bật lên
     restore_best_weights=True
 )
 
