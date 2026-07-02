@@ -1,5 +1,3 @@
-import os
-import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from PIL import Image
@@ -69,7 +67,7 @@ def annotate_dataset(conf: float = 0.3):
             total_skipped += skipped
             print(f"  ✅ Annotated: {annotated}  |  Bỏ qua (đã có): {skipped}")
 
-    print(f"\n=== HOÀN TẤT ===")
+    print("\n=== HOÀN TẤT ===")
     print(f"Tổng annotated: {total_annotated} ảnh")
     print(f"Tổng bỏ qua  : {total_skipped} ảnh (đã có XML từ trước)")
     print("Các file .xml đã được lưu cùng thư mục với ảnh.")

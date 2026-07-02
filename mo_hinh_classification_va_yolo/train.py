@@ -4,14 +4,14 @@ from keras.regularizers import l2
 
 # 1. Load data
 train_ds = tf.keras.utils.image_dataset_from_directory(
-    "data/train",
+    "../data/train",
     image_size=(224, 224),
     batch_size=32,
     shuffle=True,
     seed=42
 )
 val_ds = tf.keras.utils.image_dataset_from_directory(
-    "data/val",
+    "../data/val",
     image_size=(224, 224),
     batch_size=32,
     shuffle=True,
@@ -22,7 +22,7 @@ CLASS_NAMES = train_ds.class_names
 print("\n[INFO] Thứ tự các lớp:", CLASS_NAMES)
 
 # 2. Tính class weights để bù cho Bus bị ít ảnh hơn
-counts = [len(tf.io.gfile.listdir(f"data/train/{c}")) for c in CLASS_NAMES]
+counts = [len(tf.io.gfile.listdir(f"../data/train/{c}")) for c in CLASS_NAMES]
 total = sum(counts)
 class_weight = {i: total / (len(counts) * cnt) for i, cnt in enumerate(counts)}
 print(f"[INFO] Số ảnh mỗi class: { {CLASS_NAMES[i]: counts[i] for i in range(len(CLASS_NAMES))} }")

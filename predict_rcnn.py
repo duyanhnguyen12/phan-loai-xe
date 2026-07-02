@@ -1,14 +1,15 @@
 import sys
-import os
 from pathlib import Path
+
+sys.path.insert(0, ".")
 
 import torch
 import torchvision.transforms.functional as F
-from torchvision.models.detection import fasterrcnn_resnet50_fpn, FasterRCNN_ResNet50_FPN_Weights
-from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from PIL import Image
 import cv2
 import numpy as np
+
+from train_rcnn import build_model
 
 CLASSES    = ["__background__", "Bus", "Car", "Truck"]
 COLORS     = {"Bus": (0, 120, 255), "Car": (0, 200, 0), "Truck": (200, 0, 200)}
@@ -18,9 +19,6 @@ CONF       = 0.5   # chỉ hiển thị detection có confidence >= 50%
 
 
 def load_model():
-    import sys
-sys.path.insert(0, ".")
-from train_rcnn import build_model
     model = build_model(len(CLASSES))
     model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
     model.to(DEVICE)

@@ -10,7 +10,7 @@ print("Dang load model...")
 model = tf.keras.models.load_model("models/best_model.keras")
 
 temp_ds = tf.keras.utils.image_dataset_from_directory(
-    "data/train",
+    "../data/train",
     image_size=(224, 224),
     batch_size=1,
     shuffle=False,

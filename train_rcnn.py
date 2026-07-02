@@ -185,7 +185,7 @@ def train():
     plt.legend()
     plt.tight_layout()
     plt.savefig("ket_qua_training_rcnn.png")
-    print(f"\n-> Chart saved: ket_qua_training_rcnn.png")
+    print("\n-> Chart saved: ket_qua_training_rcnn.png")
     print(f"-> Best model : {MODEL_PATH}")
 
 

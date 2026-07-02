@@ -64,7 +64,7 @@ def predict(image_path: str, output_dir: str = "output_yolo", conf: float = 0.3)
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         # Chạy mặc định trên 3 ảnh test
-        for img in ["test_car.jpg", "test_bus.jpg", "test_truck.jpg"]:
+        for img in ["../test_car.jpg", "../test_bus.jpg", "../test_truck.jpg"]:
             if os.path.exists(img):
                 predict(img)
     else:
